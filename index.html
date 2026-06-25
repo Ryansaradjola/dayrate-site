@@ -1,6 +1,14 @@
-<div id="dayrate-site">
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DayRate — Get paid before your client pays</title>
+  <meta name="description" content="DayRate helps freelance creatives track invoices automatically and access part of their earnings early." />
+
   <style>
-    #dayrate-site {
+    :root {
       --blue:#7ff4e8;
       --blue2:#45dfd2;
       --cream:#fff9ec;
@@ -10,18 +18,23 @@
       --white:#fff;
       --shadow:0 24px 70px rgba(0,0,0,.16);
       --radius:30px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
       font-family:Inter,Arial,sans-serif;
       color:var(--ink);
       background:var(--blue);
-      overflow:hidden;
+      overflow-x:hidden;
       line-height:1.4;
     }
 
-    #dayrate-site *{box-sizing:border-box}
-    #dayrate-site a{text-decoration:none;color:inherit}
-    #dayrate-site .container{width:min(1160px,calc(100% - 40px));margin:0 auto}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1160px,calc(100% - 40px));margin:0 auto}
 
-    #dayrate-site .hero{
+    .hero{
       min-height:100vh;
       padding:34px 0 70px;
       display:flex;
@@ -32,431 +45,85 @@
         linear-gradient(135deg,var(--blue),#9ff9ef 65%,var(--blue2));
     }
 
-    #dayrate-site .brand-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:54px;
-    }
+    .brand-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:54px}
+    .brand-left{display:flex;align-items:center;gap:14px}
 
-    #dayrate-site .brand-left{display:flex;align-items:center;gap:14px}
-
-    #dayrate-site .brand-badge{
+    .brand-badge{
       width:58px;height:58px;border-radius:18px;
-      display:grid;place-items:center;
-      background:var(--ink);color:var(--blue);
-      font-weight:950;font-size:1.45rem;
-      box-shadow:var(--shadow);
+      display:grid;place-items:center;background:var(--ink);color:var(--blue);
+      font-weight:950;font-size:1.45rem;box-shadow:var(--shadow);overflow:hidden;
     }
 
-    #dayrate-site .brand-name{
-      font-size:1.55rem;
-      font-weight:950;
-      letter-spacing:-.05em;
-    }
+    .brand-badge img{width:58px;height:58px;display:block;object-fit:cover;border-radius:18px}
+    .brand-name{font-size:1.55rem;font-weight:950;letter-spacing:-.05em}
+    .nav{display:flex;gap:14px;font-weight:850}
+    .nav a{background:rgba(255,255,255,.35);border:1px solid rgba(13,13,13,.08);border-radius:999px;padding:9px 12px}
 
-    #dayrate-site .nav{display:flex;gap:14px;font-weight:850}
-    #dayrate-site .nav a{
-      background:rgba(255,255,255,.35);
-      border:1px solid rgba(13,13,13,.08);
-      border-radius:999px;
-      padding:9px 12px;
-    }
+    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:center}
+    .eyebrow{display:inline-flex;background:rgba(255,255,255,.52);border:2px solid rgba(13,13,13,.08);border-radius:999px;padding:10px 15px;font-weight:900;margin-bottom:18px}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:clamp(3.2rem,8vw,7.5rem);line-height:.88;letter-spacing:-.078em;text-transform:uppercase;margin:0;max-width:780px}
+    .highlight{display:inline-block;background:var(--green);padding:0 .08em .03em;border-radius:16px;transform:rotate(-1.5deg);box-shadow:0 10px 0 rgba(13,13,13,.12)}
+    .subcopy{max-width:610px;margin:26px 0 0;font-size:1.2rem;color:var(--muted)}
+    .actions{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+    .btn{min-height:56px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:2px solid var(--ink);padding:15px 24px;font-weight:950;cursor:pointer}
+    .btn-primary{background:var(--ink);color:var(--white)}
+    .btn-secondary{background:rgba(255,255,255,.55)}
+    .proof-row{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;font-weight:900}
+    .proof-row span{background:rgba(255,255,255,.44);border:1px solid rgba(13,13,13,.08);border-radius:999px;padding:9px 12px}
 
-    #dayrate-site .hero-grid{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:46px;
-      align-items:center;
-    }
+    .mockup-wrap{min-height:620px;display:grid;place-items:center;position:relative}
+    .blob{position:absolute;width:310px;height:310px;background:var(--green);border-radius:999px;right:20px;top:40px}
+    .phone{position:relative;z-index:2;width:322px;height:632px;border-radius:46px;background:#0b0b0d;padding:14px;box-shadow:0 34px 90px rgba(0,0,0,.3);transform:rotate(4deg)}
+    .phone:before{content:"";position:absolute;top:11px;left:50%;transform:translateX(-50%);width:116px;height:24px;border-radius:999px;background:#050506;z-index:5}
+    .screen{height:100%;border-radius:34px;overflow:hidden;background:var(--cream);padding:30px 20px 20px}
+    .app-top{display:flex;justify-content:space-between;font-weight:950;margin:22px 0 16px;font-size:.9rem}
+    .advance-card{background:var(--ink);color:var(--white);border-radius:28px;padding:22px;margin-bottom:14px}
+    .advance-label{font-size:.82rem;font-weight:900;color:rgba(255,255,255,.66);margin-bottom:8px}
+    .advance-main{font-size:3.2rem;line-height:.95;font-weight:950;letter-spacing:-.07em;color:var(--green);margin-bottom:10px}
+    .advance-card small{display:block;color:rgba(255,255,255,.72);font-weight:800}
+    .phone-btn{width:100%;margin-top:16px;border:0;border-radius:999px;padding:13px;background:var(--blue);color:var(--ink);font-weight:950}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+    .mini-card,.invoice-card{background:var(--white);border:2px solid rgba(13,13,13,.06);border-radius:20px;padding:14px;font-weight:900}
+    .mini-card span,.invoice-card span{display:block;color:var(--muted);font-size:.78rem;font-weight:750}
+    .invoice-card{margin-bottom:10px}
+    .invoice-card strong{display:block;font-size:.94rem;margin-bottom:3px}
 
-    #dayrate-site .eyebrow{
-      display:inline-flex;
-      background:rgba(255,255,255,.52);
-      border:2px solid rgba(13,13,13,.08);
-      border-radius:999px;
-      padding:10px 15px;
-      font-weight:900;
-      margin-bottom:18px;
-    }
+    section{padding:78px 0;background:var(--cream)}
+    section.blue{background:var(--blue)}
+    .section-head{max-width:810px;margin-bottom:30px}
+    h2{font-size:clamp(2.25rem,5vw,4.4rem);line-height:.92;letter-spacing:-.06em;text-transform:uppercase;margin-bottom:14px}
+    .section-head p{font-size:1.12rem;color:var(--muted);max-width:680px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--white);border:2px solid rgba(13,13,13,.06);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+    .num{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:var(--green);font-weight:950;margin-bottom:16px}
+    h3{font-size:1.24rem;margin-bottom:10px}
+    .card p{color:var(--muted);margin-bottom:0}
+    .split{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px}
+    .quote-card{background:var(--ink);color:var(--white);border-radius:34px;padding:34px;box-shadow:var(--shadow)}
+    .quote-card h2{color:var(--green)}
+    .quote-card p{color:rgba(255,255,255,.76);font-size:1.1rem}
+    .dashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .dash-card{background:var(--white);border-radius:24px;padding:22px;box-shadow:var(--shadow)}
+    .dash-card span{display:block;color:var(--muted);font-weight:850;margin-bottom:8px}
+    .dash-card strong{display:block;font-size:2rem;line-height:1}
+    .pricing{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .price-card{background:var(--white);border-radius:32px;padding:30px;box-shadow:var(--shadow)}
+    .price-card.featured{background:var(--ink);color:var(--white)}
+    .price{font-size:3rem;font-weight:950;letter-spacing:-.06em;margin-bottom:6px}
+    .price-card.featured .price{color:var(--green)}
+    .price-card ul{padding:0;margin:22px 0 0;list-style:none;display:grid;gap:12px}
+    .price-card li{color:var(--muted);font-weight:760}
+    .price-card.featured li{color:rgba(255,255,255,.76)}
+    .waitlist-box{background:radial-gradient(circle at 90% 15%,rgba(215,255,0,.7),transparent 22%),var(--blue);border-radius:38px;padding:36px;box-shadow:var(--shadow)}
+    .beehiiv-form-wrap{margin-top:24px;max-width:720px}
+    footer{background:var(--cream);color:var(--muted);padding:26px 0 40px;font-weight:760}
 
-    #dayrate-site h1,#dayrate-site h2,#dayrate-site h3,#dayrate-site p{margin-top:0}
-
-    #dayrate-site h1{
-      font-size:clamp(3.2rem,8vw,7.5rem);
-      line-height:.88;
-      letter-spacing:-.078em;
-      text-transform:uppercase;
-      margin:0;
-      max-width:780px;
-    }
-
-    #dayrate-site .highlight{
-      display:inline-block;
-      background:var(--green);
-      padding:0 .08em .03em;
-      border-radius:16px;
-      transform:rotate(-1.5deg);
-      box-shadow:0 10px 0 rgba(13,13,13,.12);
-    }
-
-    #dayrate-site .subcopy{
-      max-width:610px;
-      margin:26px 0 0;
-      font-size:1.2rem;
-      color:var(--muted);
-    }
-
-    #dayrate-site .actions{
-      margin-top:32px;
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-
-    #dayrate-site .btn{
-      min-height:56px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:999px;
-      border:2px solid var(--ink);
-      padding:15px 24px;
-      font-weight:950;
-      cursor:pointer;
-    }
-
-    #dayrate-site .btn-primary{background:var(--ink);color:var(--white)}
-    #dayrate-site .btn-secondary{background:rgba(255,255,255,.55)}
-
-    #dayrate-site .proof-row{
-      margin-top:22px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      font-weight:900;
-    }
-
-    #dayrate-site .proof-row span{
-      background:rgba(255,255,255,.44);
-      border:1px solid rgba(13,13,13,.08);
-      border-radius:999px;
-      padding:9px 12px;
-    }
-
-    #dayrate-site .mockup-wrap{
-      min-height:620px;
-      display:grid;
-      place-items:center;
-      position:relative;
-    }
-
-    #dayrate-site .blob{
-      position:absolute;
-      width:310px;
-      height:310px;
-      background:var(--green);
-      border-radius:999px;
-      right:20px;
-      top:40px;
-    }
-
-    #dayrate-site .phone{
-      position:relative;
-      z-index:2;
-      width:322px;
-      height:632px;
-      border-radius:46px;
-      background:#0b0b0d;
-      padding:14px;
-      box-shadow:0 34px 90px rgba(0,0,0,.3);
-      transform:rotate(4deg);
-    }
-
-    #dayrate-site .phone:before{
-      content:"";
-      position:absolute;
-      top:11px;
-      left:50%;
-      transform:translateX(-50%);
-      width:116px;
-      height:24px;
-      border-radius:999px;
-      background:#050506;
-      z-index:5;
-    }
-
-    #dayrate-site .screen{
-      height:100%;
-      border-radius:34px;
-      overflow:hidden;
-      background:var(--cream);
-      padding:30px 20px 20px;
-    }
-
-    #dayrate-site .app-top{
-      display:flex;
-      justify-content:space-between;
-      font-weight:950;
-      margin:22px 0 16px;
-      font-size:.9rem;
-    }
-
-    #dayrate-site .advance-card{
-      background:var(--ink);
-      color:var(--white);
-      border-radius:28px;
-      padding:22px;
-      margin-bottom:14px;
-    }
-
-    #dayrate-site .advance-label{
-      font-size:.82rem;
-      font-weight:900;
-      color:rgba(255,255,255,.66);
-      margin-bottom:8px;
-    }
-
-    #dayrate-site .advance-main{
-      font-size:3.2rem;
-      line-height:.95;
-      font-weight:950;
-      letter-spacing:-.07em;
-      color:var(--green);
-      margin-bottom:10px;
-    }
-
-    #dayrate-site .advance-card small{
-      display:block;
-      color:rgba(255,255,255,.72);
-      font-weight:800;
-    }
-
-    #dayrate-site .phone-btn{
-      width:100%;
-      margin-top:16px;
-      border:0;
-      border-radius:999px;
-      padding:13px;
-      background:var(--blue);
-      color:var(--ink);
-      font-weight:950;
-    }
-
-    #dayrate-site .mini-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-bottom:14px;
-    }
-
-    #dayrate-site .mini-card,
-    #dayrate-site .invoice-card{
-      background:var(--white);
-      border:2px solid rgba(13,13,13,.06);
-      border-radius:20px;
-      padding:14px;
-      font-weight:900;
-    }
-
-    #dayrate-site .mini-card span,
-    #dayrate-site .invoice-card span{
-      display:block;
-      color:var(--muted);
-      font-size:.78rem;
-      font-weight:750;
-    }
-
-    #dayrate-site .invoice-card{margin-bottom:10px}
-    #dayrate-site .invoice-card strong{display:block;font-size:.94rem;margin-bottom:3px}
-
-    #dayrate-site section{padding:78px 0;background:var(--cream)}
-    #dayrate-site section.blue{background:var(--blue)}
-
-    #dayrate-site .section-head{max-width:810px;margin-bottom:30px}
-
-    #dayrate-site h2{
-      font-size:clamp(2.25rem,5vw,4.4rem);
-      line-height:.92;
-      letter-spacing:-.06em;
-      text-transform:uppercase;
-      margin-bottom:14px;
-    }
-
-    #dayrate-site .section-head p{
-      font-size:1.12rem;
-      color:var(--muted);
-      max-width:680px;
-    }
-
-    #dayrate-site .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:18px;
-    }
-
-    #dayrate-site .card{
-      background:var(--white);
-      border:2px solid rgba(13,13,13,.06);
-      border-radius:var(--radius);
-      padding:26px;
-      box-shadow:var(--shadow);
-    }
-
-    #dayrate-site .num{
-      width:50px;
-      height:50px;
-      border-radius:16px;
-      display:grid;
-      place-items:center;
-      background:var(--green);
-      font-weight:950;
-      margin-bottom:16px;
-    }
-
-    #dayrate-site h3{font-size:1.24rem;margin-bottom:10px}
-    #dayrate-site .card p{color:var(--muted);margin-bottom:0}
-
-    #dayrate-site .split{
-      display:grid;
-      grid-template-columns:.9fr 1.1fr;
-      gap:22px;
-    }
-
-    #dayrate-site .quote-card{
-      background:var(--ink);
-      color:var(--white);
-      border-radius:34px;
-      padding:34px;
-      box-shadow:var(--shadow);
-    }
-
-    #dayrate-site .quote-card h2{color:var(--green)}
-    #dayrate-site .quote-card p{color:rgba(255,255,255,.76);font-size:1.1rem}
-
-    #dayrate-site .dashboard{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:14px;
-    }
-
-    #dayrate-site .dash-card{
-      background:var(--white);
-      border-radius:24px;
-      padding:22px;
-      box-shadow:var(--shadow);
-    }
-
-    #dayrate-site .dash-card span{
-      display:block;
-      color:var(--muted);
-      font-weight:850;
-      margin-bottom:8px;
-    }
-
-    #dayrate-site .dash-card strong{
-      display:block;
-      font-size:2rem;
-      line-height:1;
-    }
-
-    #dayrate-site .pricing{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:20px;
-    }
-
-    #dayrate-site .price-card{
-      background:var(--white);
-      border-radius:32px;
-      padding:30px;
-      box-shadow:var(--shadow);
-    }
-
-    #dayrate-site .price-card.featured{
-      background:var(--ink);
-      color:var(--white);
-    }
-
-    #dayrate-site .price{
-      font-size:3rem;
-      font-weight:950;
-      letter-spacing:-.06em;
-      margin-bottom:6px;
-    }
-
-    #dayrate-site .price-card.featured .price{color:var(--green)}
-
-    #dayrate-site .price-card ul{
-      padding:0;
-      margin:22px 0 0;
-      list-style:none;
-      display:grid;
-      gap:12px;
-    }
-
-    #dayrate-site .price-card li{color:var(--muted);font-weight:760}
-    #dayrate-site .price-card.featured li{color:rgba(255,255,255,.76)}
-
-    #dayrate-site .waitlist-box{
-      background:
-        radial-gradient(circle at 90% 15%,rgba(215,255,0,.7),transparent 22%),
-        var(--blue);
-      border-radius:38px;
-      padding:36px;
-      box-shadow:var(--shadow);
-    }
-
-    #dayrate-site form{
-      margin-top:24px;
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-
-    #dayrate-site input[type="email"]{
-      flex:1 1 320px;
-      border:2px solid rgba(13,13,13,.12);
-      border-radius:999px;
-      padding:17px 18px;
-      font-size:1rem;
-      outline:none;
-    }
-
-    #dayrate-site .success-msg{
-      display:none;
-      margin-top:14px;
-      font-weight:950;
-    }
-
-    #dayrate-site footer{
-      background:var(--cream);
-      color:var(--muted);
-      padding:26px 0 40px;
-      font-weight:760;
-    }
-
-    @media(max-width:960px){
-      #dayrate-site .hero-grid,
-      #dayrate-site .grid-3,
-      #dayrate-site .split,
-      #dayrate-site .pricing{grid-template-columns:1fr}
-      #dayrate-site .dashboard{grid-template-columns:repeat(2,1fr)}
-      #dayrate-site .nav{display:none}
-      #dayrate-site .mockup-wrap{min-height:auto;padding-top:26px}
-    }
-
-    @media(max-width:620px){
-      #dayrate-site .container{width:min(1160px,calc(100% - 22px))}
-      #dayrate-site h1{font-size:3.25rem}
-      #dayrate-site .actions{flex-direction:column}
-      #dayrate-site .btn{width:100%}
-      #dayrate-site .proof-row{display:grid}
-      #dayrate-site .phone{width:270px;height:542px}
-      #dayrate-site .dashboard{grid-template-columns:1fr}
-    }
+    @media(max-width:960px){.hero-grid,.grid-3,.split,.pricing{grid-template-columns:1fr}.dashboard{grid-template-columns:repeat(2,1fr)}.nav{display:none}.mockup-wrap{min-height:auto;padding-top:26px}}
+    @media(max-width:620px){.container{width:min(1160px,calc(100% - 22px))}h1{font-size:3.25rem}.actions{flex-direction:column}.btn{width:100%}.proof-row{display:grid}.phone{width:270px;height:542px}.dashboard{grid-template-columns:1fr}}
   </style>
-
+</head>
+<body>
   <main>
     <section class="hero">
       <div class="container">
@@ -465,252 +132,37 @@
             <div class="brand-badge">D</div>
             <div class="brand-name">DayRate</div>
           </div>
-
-          <nav class="nav">
-            <a href="#how">How it works</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#waitlist">Join waitlist</a>
-          </nav>
+          <nav class="nav"><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#waitlist">Join waitlist</a></nav>
         </div>
-
         <div class="hero-grid">
           <div>
             <div class="eyebrow">Early pay for freelance creatives</div>
-
             <h1>Get paid before your client <span class="highlight">pays.</span></h1>
-
-            <p class="subcopy">
-              DayRate connects to your email, tracks freelance invoices automatically,
-              and may offer early access to part of your earnings based on client payment history.
-            </p>
-
-            <div class="actions">
-              <a href="#waitlist" class="btn btn-primary">Join Early Access</a>
-              <a href="#how" class="btn btn-secondary">See how it works</a>
-            </div>
-
-            <div class="proof-row">
-              <span>Invoice £1,000</span>
-              <span>Get £700 today</span>
-              <span>Fee from £35</span>
-            </div>
+            <p class="subcopy">DayRate connects to your email, tracks freelance invoices automatically, and may offer early access to part of your earnings based on client payment history.</p>
+            <div class="actions"><a href="#waitlist" class="btn btn-primary">Join Early Access</a><a href="#how" class="btn btn-secondary">See how it works</a></div>
+            <div class="proof-row"><span>Invoice £1,000</span><span>Get £700 today</span><span>Fee from £35</span></div>
           </div>
-
           <div class="mockup-wrap">
             <div class="blob"></div>
-            <div class="phone">
-              <div class="screen">
-                <div class="app-top">
-                  <span>DayRate</span>
-                  <span>9:41</span>
-                </div>
-
-                <div class="advance-card">
-                  <div class="advance-label">Eligible for Early Pay</div>
-                  <div class="advance-main">£700 today</div>
-                  <small>Invoice value £1,000 · Estimated fee £35</small>
-                  <button class="phone-btn">Check eligibility</button>
-                </div>
-
-                <div class="mini-grid">
-                  <div class="mini-card"><span>Outstanding</span>£4,250</div>
-                  <div class="mini-card"><span>Expected</span>£1,500</div>
-                </div>
-
-                <div class="invoice-card">
-                  <strong>Nike shoot</strong>
-                  <span>£1,000 · trusted client · due in 21 days</span>
-                </div>
-
-                <div class="invoice-card">
-                  <strong>Brand edit day</strong>
-                  <span>£750 · invoice sent · due Friday</span>
-                </div>
-
-                <div class="invoice-card">
-                  <strong>Portrait session</strong>
-                  <span>£350 · paid yesterday</span>
-                </div>
-              </div>
-            </div>
+            <div class="phone"><div class="screen"><div class="app-top"><span>DayRate</span><span>9:41</span></div><div class="advance-card"><div class="advance-label">Eligible for Early Pay</div><div class="advance-main">£700 today</div><small>Invoice value £1,000 · Estimated fee £35</small><button class="phone-btn">Check eligibility</button></div><div class="mini-grid"><div class="mini-card"><span>Outstanding</span>£4,250</div><div class="mini-card"><span>Expected</span>£1,500</div></div><div class="invoice-card"><strong>Nike shoot</strong><span>£1,000 · trusted client · due in 21 days</span></div><div class="invoice-card"><strong>Brand edit day</strong><span>£750 · invoice sent · due Friday</span></div><div class="invoice-card"><strong>Portrait session</strong><span>£350 · paid yesterday</span></div></div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="how">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">How it works</div>
-          <h2>Cashflow without awkward client chasing.</h2>
-          <p>
-            DayRate sits quietly in the background. It helps you understand where your money is
-            and gives you the option to access cash early when an invoice is eligible.
-          </p>
-        </div>
+    <section id="how"><div class="container"><div class="section-head"><div class="eyebrow">How it works</div><h2>Cashflow without awkward client chasing.</h2><p>DayRate sits quietly in the background. It helps you understand where your money is and gives you the option to access cash early when an invoice is eligible.</p></div><div class="grid-3"><div class="card"><div class="num">1</div><h3>Connect your email</h3><p>Use Gmail, Outlook, Microsoft 365, or forward emails to DayRate. We look for invoices, POs, terms and payment confirmations.</p></div><div class="card"><div class="num">2</div><h3>Track every payment</h3><p>See what is outstanding, expected, overdue and paid without digging through your inbox or spreadsheet.</p></div><div class="card"><div class="num">3</div><h3>Access money early</h3><p>If the invoice and client history qualify, DayRate can offer part of your earnings before the client pays.</p></div></div></div></section>
 
-        <div class="grid-3">
-          <div class="card">
-            <div class="num">1</div>
-            <h3>Connect your email</h3>
-            <p>Use Gmail, Outlook, Microsoft 365, or forward emails to DayRate. We look for invoices, POs, terms and payment confirmations.</p>
-          </div>
+    <section class="blue"><div class="container split"><div class="quote-card"><h2>The plumber test.</h2><p>You wouldn’t hire a plumber, let them fix your sink, then say: “Cool, we’ll pay you in 60 days.”</p><p>So why is that normal for freelance creatives?</p></div><div class="card"><div class="eyebrow">The idea</div><h2>Freelancers shouldn’t be the bank.</h2><p>DayRate is built for creatives who value client relationships but still need clarity, control and better cashflow.</p></div></div></section>
 
-          <div class="card">
-            <div class="num">2</div>
-            <h3>Track every payment</h3>
-            <p>See what is outstanding, expected, overdue and paid without digging through your inbox or spreadsheet.</p>
-          </div>
+    <section><div class="container"><div class="section-head"><div class="eyebrow">Your money dashboard</div><h2>Know where your money is.</h2><p>One place for expected payments, overdue invoices, paid work and client reliability.</p></div><div class="dashboard"><div class="dash-card"><span>Outstanding</span><strong>£4,250</strong></div><div class="dash-card"><span>Expected this week</span><strong>£1,500</strong></div><div class="dash-card"><span>Overdue</span><strong>£900</strong></div><div class="dash-card"><span>Avg payment time</span><strong>32 days</strong></div></div></div></section>
 
-          <div class="card">
-            <div class="num">3</div>
-            <h3>Access money early</h3>
-            <p>If the invoice and client history qualify, DayRate can offer part of your earnings before the client pays.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <section class="blue"><div class="container"><div class="section-head"><div class="eyebrow">Coming soon</div><h2>DayRate Score.</h2><p>A client payment reliability score based on real payment behaviour. The stronger the history, the more likely invoices become eligible for Early Pay.</p></div><div class="grid-3"><div class="card"><div class="num">✓</div><h3>Client reliability</h3><p>See which clients usually pay on time and which ones keep freelancers waiting.</p></div><div class="card"><div class="num">%</div><h3>Advance potential</h3><p>Trusted invoices may unlock early access to a percentage of your payment.</p></div><div class="card"><div class="num">!</div><h3>Risk clarity</h3><p>Know what to expect before your cashflow gets stretched.</p></div></div></div></section>
 
-    <section class="blue">
-      <div class="container split">
-        <div class="quote-card">
-          <h2>The plumber test.</h2>
-          <p>You wouldn’t hire a plumber, let them fix your sink, then say: “Cool, we’ll pay you in 60 days.”</p>
-          <p>So why is that normal for freelance creatives?</p>
-        </div>
+    <section id="pricing"><div class="container"><div class="section-head"><div class="eyebrow">Pricing</div><h2>Simple to start.</h2><p>Track payments first. Use Early Pay only when you need it.</p></div><div class="pricing"><div class="price-card"><h3>Free</h3><div class="price">£0</div><p>For testing DayRate with a few active invoices.</p><ul><li>Track up to 5 invoices</li><li>Basic dashboard</li><li>Email forwarding</li></ul></div><div class="price-card featured"><h3>DayRate Pro</h3><div class="price">£9.99/mo</div><p>For freelancers who want full payment visibility.</p><ul><li>Unlimited invoices</li><li>Gmail, Outlook and Microsoft 365 integrations</li><li>Payment forecasts</li><li>Client insights</li><li>Priority access to Early Pay</li></ul></div></div></div></section>
 
-        <div class="card">
-          <div class="eyebrow">The idea</div>
-          <h2>Freelancers shouldn’t be the bank.</h2>
-          <p>DayRate is built for creatives who value client relationships but still need clarity, control and better cashflow.</p>
-        </div>
-      </div>
-    </section>
+    <section class="blue" id="waitlist"><div class="container"><div class="waitlist-box"><div class="section-head" style="margin-bottom:0;"><div class="eyebrow">Join early access</div><h2>Get closer to the money you’ve already earned.</h2><p>Join the waitlist for automatic payment tracking, client payment insights and Early Pay eligibility.</p></div><div class="beehiiv-form-wrap"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="9e3c77d0-dcd4-405f-9d93-363eebdf003f"></script></div></div></div></section>
 
-    <section>
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Your money dashboard</div>
-          <h2>Know where your money is.</h2>
-          <p>One place for expected payments, overdue invoices, paid work and client reliability.</p>
-        </div>
-
-        <div class="dashboard">
-          <div class="dash-card"><span>Outstanding</span><strong>£4,250</strong></div>
-          <div class="dash-card"><span>Expected this week</span><strong>£1,500</strong></div>
-          <div class="dash-card"><span>Overdue</span><strong>£900</strong></div>
-          <div class="dash-card"><span>Avg payment time</span><strong>32 days</strong></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="blue">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Coming soon</div>
-          <h2>DayRate Score.</h2>
-          <p>
-            A client payment reliability score based on real payment behaviour.
-            The stronger the history, the more likely invoices become eligible for Early Pay.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <div class="num">✓</div>
-            <h3>Client reliability</h3>
-            <p>See which clients usually pay on time and which ones keep freelancers waiting.</p>
-          </div>
-
-          <div class="card">
-            <div class="num">%</div>
-            <h3>Advance potential</h3>
-            <p>Trusted invoices may unlock early access to a percentage of your payment.</p>
-          </div>
-
-          <div class="card">
-            <div class="num">!</div>
-            <h3>Risk clarity</h3>
-            <p>Know what to expect before your cashflow gets stretched.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="pricing">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">Pricing</div>
-          <h2>Simple to start.</h2>
-          <p>Track payments first. Use Early Pay only when you need it.</p>
-        </div>
-
-        <div class="pricing">
-          <div class="price-card">
-            <h3>Free</h3>
-            <div class="price">£0</div>
-            <p>For testing DayRate with a few active invoices.</p>
-            <ul>
-              <li>Track up to 5 invoices</li>
-              <li>Basic dashboard</li>
-              <li>Email forwarding</li>
-            </ul>
-          </div>
-
-          <div class="price-card featured">
-            <h3>DayRate Pro</h3>
-            <div class="price">£9.99/mo</div>
-            <p>For freelancers who want full payment visibility.</p>
-            <ul>
-              <li>Unlimited invoices</li>
-              <li>Gmail, Outlook and Microsoft 365 integrations</li>
-              <li>Payment forecasts</li>
-              <li>Client insights</li>
-              <li>Priority access to Early Pay</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="blue" id="waitlist">
-      <div class="container">
-        <div class="waitlist-box">
-          <div class="section-head" style="margin-bottom:0;">
-            <div class="eyebrow">Join early access</div>
-            <h2>Get closer to the money you’ve already earned.</h2>
-            <p>Join the waitlist for automatic payment tracking, client payment insights and Early Pay eligibility.</p>
-          </div>
-
-          <form id="dayrateWaitlistForm">
-            <input type="email" id="dayrateEmail" placeholder="Enter your email" required />
-            <button type="submit" class="btn btn-primary">Join waitlist</button>
-          </form>
-
-          <div class="success-msg" id="dayrateSuccessMsg">Thanks — you’re on the list.</div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="container">
-        <strong>DayRate</strong> — get paid before your client pays.
-      </div>
-    </footer>
+    <footer><div class="container"><strong>DayRate</strong> — get paid before your client pays.</div></footer>
   </main>
-
-  <script>
-    (function () {
-      const form = document.getElementById("dayrateWaitlistForm");
-      const successMsg = document.getElementById("dayrateSuccessMsg");
-
-      if (form) {
-        form.addEventListener("submit", function (event) {
-          event.preventDefault();
-          if (successMsg) successMsg.style.display = "block";
-          form.reset();
-        });
-      }
-    })();
-  </script>
-</div>
+</body>
+</html>
