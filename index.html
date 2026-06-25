@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DayRate — Get paid before your client pays</title>
-  <meta name="description" content="DayRate helps freelance creatives track invoices automatically and access part of their earnings early." />
+  <meta name="description" content="DayRate helps freelance creatives track invoices, payments and cashflow with AI-powered tools and simple manual entry." />
 
   <style>
     :root {
@@ -16,6 +16,11 @@
       --muted:rgba(13,13,13,.68);
       --green:#d7ff00;
       --white:#fff;
+      --navy:#061826;
+      --navy2:#0B2538;
+      --mint:#5CF2D6;
+      --mint2:#2AD9C6;
+      --line:rgba(13,13,13,.10);
       --shadow:0 24px 70px rgba(0,0,0,.16);
       --radius:30px;
     }
@@ -26,7 +31,7 @@
       margin:0;
       font-family:Inter,Arial,sans-serif;
       color:var(--ink);
-      background:var(--blue);
+      background:var(--cream);
       overflow-x:hidden;
       line-height:1.4;
     }
@@ -43,86 +48,588 @@
         radial-gradient(circle at 84% 12%,rgba(215,255,0,.78),transparent 18%),
         radial-gradient(circle at 15% 85%,rgba(255,111,177,.38),transparent 19%),
         linear-gradient(135deg,var(--blue),#9ff9ef 65%,var(--blue2));
+      overflow:hidden;
     }
 
-    .brand-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:54px}
+    .brand-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:54px;
+      gap:20px;
+    }
+
     .brand-left{display:flex;align-items:center;gap:14px}
 
     .brand-badge{
-      width:58px;height:58px;border-radius:18px;
-      display:grid;place-items:center;background:var(--ink);color:var(--blue);
-      font-weight:950;font-size:1.45rem;box-shadow:var(--shadow);overflow:hidden;
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      background:var(--ink);
+      color:var(--blue);
+      font-weight:950;
+      font-size:1.45rem;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      flex:0 0 auto;
     }
 
-    .brand-badge img{width:58px;height:58px;display:block;object-fit:cover;border-radius:18px}
-    .brand-name{font-size:1.55rem;font-weight:950;letter-spacing:-.05em}
-    .nav{display:flex;gap:14px;font-weight:850}
-    .nav a{background:rgba(255,255,255,.35);border:1px solid rgba(13,13,13,.08);border-radius:999px;padding:9px 12px}
+    .brand-name{
+      font-size:1.55rem;
+      font-weight:950;
+      letter-spacing:-.05em;
+    }
 
-    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:center}
-    .eyebrow{display:inline-flex;background:rgba(255,255,255,.52);border:2px solid rgba(13,13,13,.08);border-radius:999px;padding:10px 15px;font-weight:900;margin-bottom:18px}
+    .nav{display:flex;gap:14px;font-weight:850;align-items:center}
+    .nav a{
+      background:rgba(255,255,255,.35);
+      border:1px solid rgba(13,13,13,.08);
+      border-radius:999px;
+      padding:9px 12px;
+      white-space:nowrap;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:46px;
+      align-items:center;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      background:rgba(255,255,255,.52);
+      border:2px solid rgba(13,13,13,.08);
+      border-radius:999px;
+      padding:10px 15px;
+      font-weight:900;
+      margin-bottom:18px;
+    }
+
     h1,h2,h3,p{margin-top:0}
-    h1{font-size:clamp(3.2rem,8vw,7.5rem);line-height:.88;letter-spacing:-.078em;text-transform:uppercase;margin:0;max-width:780px}
-    .highlight{display:inline-block;background:var(--green);padding:0 .08em .03em;border-radius:16px;transform:rotate(-1.5deg);box-shadow:0 10px 0 rgba(13,13,13,.12)}
-    .subcopy{max-width:610px;margin:26px 0 0;font-size:1.2rem;color:var(--muted)}
-    .actions{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
-    .btn{min-height:56px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:2px solid var(--ink);padding:15px 24px;font-weight:950;cursor:pointer}
+
+    h1{
+      font-size:clamp(3.2rem,8vw,7.5rem);
+      line-height:.88;
+      letter-spacing:-.078em;
+      text-transform:uppercase;
+      margin:0;
+      max-width:780px;
+    }
+
+    .highlight{
+      display:inline-block;
+      background:var(--green);
+      padding:0 .08em .03em;
+      border-radius:16px;
+      transform:rotate(-1.5deg);
+      box-shadow:0 10px 0 rgba(13,13,13,.12);
+    }
+
+    .subcopy{
+      max-width:610px;
+      margin:26px 0 0;
+      font-size:1.2rem;
+      color:var(--muted);
+    }
+
+    .actions{
+      margin-top:32px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      min-height:56px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      border:2px solid var(--ink);
+      padding:15px 24px;
+      font-weight:950;
+      cursor:pointer;
+    }
+
     .btn-primary{background:var(--ink);color:var(--white)}
     .btn-secondary{background:rgba(255,255,255,.55)}
-    .proof-row{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;font-weight:900}
-    .proof-row span{background:rgba(255,255,255,.44);border:1px solid rgba(13,13,13,.08);border-radius:999px;padding:9px 12px}
 
-    .mockup-wrap{min-height:620px;display:grid;place-items:center;position:relative}
-    .blob{position:absolute;width:310px;height:310px;background:var(--green);border-radius:999px;right:20px;top:40px}
-    .phone{position:relative;z-index:2;width:322px;height:632px;border-radius:46px;background:#0b0b0d;padding:14px;box-shadow:0 34px 90px rgba(0,0,0,.3);transform:rotate(4deg)}
-    .phone:before{content:"";position:absolute;top:11px;left:50%;transform:translateX(-50%);width:116px;height:24px;border-radius:999px;background:#050506;z-index:5}
-    .screen{height:100%;border-radius:34px;overflow:hidden;background:var(--cream);padding:30px 20px 20px}
-    .app-top{display:flex;justify-content:space-between;font-weight:950;margin:22px 0 16px;font-size:.9rem}
-    .advance-card{background:var(--ink);color:var(--white);border-radius:28px;padding:22px;margin-bottom:14px}
-    .advance-label{font-size:.82rem;font-weight:900;color:rgba(255,255,255,.66);margin-bottom:8px}
-    .advance-main{font-size:3.2rem;line-height:.95;font-weight:950;letter-spacing:-.07em;color:var(--green);margin-bottom:10px}
-    .advance-card small{display:block;color:rgba(255,255,255,.72);font-weight:800}
-    .phone-btn{width:100%;margin-top:16px;border:0;border-radius:999px;padding:13px;background:var(--blue);color:var(--ink);font-weight:950}
-    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-    .mini-card,.invoice-card{background:var(--white);border:2px solid rgba(13,13,13,.06);border-radius:20px;padding:14px;font-weight:900}
-    .mini-card span,.invoice-card span{display:block;color:var(--muted);font-size:.78rem;font-weight:750}
+    .proof-row{
+      margin-top:22px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      font-weight:900;
+    }
+
+    .proof-row span{
+      background:rgba(255,255,255,.44);
+      border:1px solid rgba(13,13,13,.08);
+      border-radius:999px;
+      padding:9px 12px;
+    }
+
+    .mockup-wrap{
+      min-height:620px;
+      display:grid;
+      place-items:center;
+      position:relative;
+    }
+
+    .blob{
+      position:absolute;
+      width:310px;
+      height:310px;
+      background:var(--green);
+      border-radius:999px;
+      right:20px;
+      top:40px;
+    }
+
+    .phone{
+      position:relative;
+      z-index:2;
+      width:322px;
+      height:632px;
+      border-radius:46px;
+      background:#0b0b0d;
+      padding:14px;
+      box-shadow:0 34px 90px rgba(0,0,0,.3);
+      transform:rotate(4deg);
+    }
+
+    .phone:before{
+      content:"";
+      position:absolute;
+      top:11px;
+      left:50%;
+      transform:translateX(-50%);
+      width:116px;
+      height:24px;
+      border-radius:999px;
+      background:#050506;
+      z-index:5;
+    }
+
+    .screen{
+      height:100%;
+      border-radius:34px;
+      overflow:hidden;
+      background:var(--cream);
+      padding:30px 20px 20px;
+    }
+
+    .app-top{
+      display:flex;
+      justify-content:space-between;
+      font-weight:950;
+      margin:22px 0 16px;
+      font-size:.9rem;
+    }
+
+    .advance-card{
+      background:var(--ink);
+      color:var(--white);
+      border-radius:28px;
+      padding:22px;
+      margin-bottom:14px;
+    }
+
+    .advance-label{
+      font-size:.82rem;
+      font-weight:900;
+      color:rgba(255,255,255,.66);
+      margin-bottom:8px;
+    }
+
+    .advance-main{
+      font-size:3.2rem;
+      line-height:.95;
+      font-weight:950;
+      letter-spacing:-.07em;
+      color:var(--green);
+      margin-bottom:10px;
+    }
+
+    .advance-card small{
+      display:block;
+      color:rgba(255,255,255,.72);
+      font-weight:800;
+    }
+
+    .phone-btn{
+      width:100%;
+      margin-top:16px;
+      border:0;
+      border-radius:999px;
+      padding:13px;
+      background:var(--blue);
+      color:var(--ink);
+      font-weight:950;
+    }
+
+    .mini-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .mini-card,
+    .invoice-card{
+      background:var(--white);
+      border:2px solid rgba(13,13,13,.06);
+      border-radius:20px;
+      padding:14px;
+      font-weight:900;
+    }
+
+    .mini-card span,
+    .invoice-card span{
+      display:block;
+      color:var(--muted);
+      font-size:.78rem;
+      font-weight:750;
+    }
+
     .invoice-card{margin-bottom:10px}
     .invoice-card strong{display:block;font-size:.94rem;margin-bottom:3px}
 
+    .ai-hero{
+      padding:78px 0;
+      background:
+        radial-gradient(circle at 86% 14%,rgba(92,242,214,.26),transparent 22%),
+        radial-gradient(circle at 14% 86%,rgba(215,255,0,.16),transparent 20%),
+        linear-gradient(135deg,var(--navy),var(--navy2) 62%,#0D3F4A);
+      color:white;
+    }
+
+    .ai-hero-grid{
+      display:grid;
+      grid-template-columns:1fr .98fr;
+      gap:48px;
+      align-items:center;
+    }
+
+    .ai-hero .eyebrow{
+      background:rgba(92,242,214,.12);
+      border-color:rgba(92,242,214,.30);
+      color:#DFFFF8;
+    }
+
+    .ai-hero h2{color:white}
+    .ai-hero p{color:rgba(255,255,255,.72)}
+
+    .ai-hero .btn-primary{
+      background:linear-gradient(135deg,var(--mint),var(--mint2));
+      color:var(--navy);
+      border-color:transparent;
+    }
+
+    .ai-hero .btn-secondary{
+      background:rgba(255,255,255,.08);
+      color:white;
+      border-color:rgba(255,255,255,.18);
+    }
+
+    .ai-hero .proof-row span{
+      background:rgba(255,255,255,.10);
+      border-color:rgba(255,255,255,.14);
+      color:rgba(255,255,255,.82);
+    }
+
+    .ai-panel{
+      background:rgba(255,255,255,.09);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:34px;
+      padding:18px;
+      box-shadow:0 34px 90px rgba(0,0,0,.32);
+      backdrop-filter:blur(18px);
+    }
+
+    .ai-window{
+      background:#F7FFFB;
+      color:var(--ink);
+      border-radius:26px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.22);
+    }
+
+    .ai-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 20px;
+      background:var(--white);
+      border-bottom:1px solid var(--line);
+      font-weight:950;
+    }
+
+    .ai-pill{
+      background:rgba(42,217,198,.14);
+      color:#087164;
+      border:1px solid rgba(42,217,198,.22);
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:.82rem;
+    }
+
+    .chat{
+      display:grid;
+      gap:14px;
+      padding:20px;
+    }
+
+    .bubble{
+      border-radius:22px;
+      padding:16px;
+      font-weight:850;
+    }
+
+    .bubble.user{
+      background:var(--navy);
+      color:white;
+      justify-self:end;
+      max-width:88%;
+    }
+
+    .bubble.ai{
+      background:white;
+      border:1px solid var(--line);
+      box-shadow:0 12px 28px rgba(6,24,38,.08);
+    }
+
+    .invoice-preview{
+      margin-top:12px;
+      display:grid;
+      gap:8px;
+      background:#F3FFFC;
+      border:1px solid rgba(42,217,198,.28);
+      border-radius:18px;
+      padding:14px;
+      font-weight:800;
+    }
+
+    .invoice-preview div{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      color:var(--muted);
+    }
+
+    .invoice-preview strong{color:var(--ink)}
+
+    .ai-input{
+      margin:0 20px 20px;
+      background:white;
+      border:2px solid rgba(6,24,38,.10);
+      border-radius:999px;
+      padding:14px 16px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      color:var(--muted);
+      font-weight:850;
+    }
+
+    .send-dot{
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      display:grid;
+      place-items:center;
+      background:var(--mint);
+      color:var(--navy);
+      flex:0 0 auto;
+    }
+
     section{padding:78px 0;background:var(--cream)}
     section.blue{background:var(--blue)}
+    section.mint{background:linear-gradient(135deg,#EFFFFB,#F8FFF8)}
     .section-head{max-width:810px;margin-bottom:30px}
-    h2{font-size:clamp(2.25rem,5vw,4.4rem);line-height:.92;letter-spacing:-.06em;text-transform:uppercase;margin-bottom:14px}
-    .section-head p{font-size:1.12rem;color:var(--muted);max-width:680px}
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .card{background:var(--white);border:2px solid rgba(13,13,13,.06);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
-    .num{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:var(--green);font-weight:950;margin-bottom:16px}
+
+    h2{
+      font-size:clamp(2.25rem,5vw,4.4rem);
+      line-height:.92;
+      letter-spacing:-.06em;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .section-head p{
+      font-size:1.12rem;
+      color:var(--muted);
+      max-width:680px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .card{
+      background:var(--white);
+      border:2px solid rgba(13,13,13,.06);
+      border-radius:var(--radius);
+      padding:26px;
+      box-shadow:var(--shadow);
+    }
+
+    .num{
+      width:50px;
+      height:50px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:var(--green);
+      font-weight:950;
+      margin-bottom:16px;
+    }
+
     h3{font-size:1.24rem;margin-bottom:10px}
     .card p{color:var(--muted);margin-bottom:0}
-    .split{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px}
-    .quote-card{background:var(--ink);color:var(--white);border-radius:34px;padding:34px;box-shadow:var(--shadow)}
+
+    .split{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:22px;
+    }
+
+    .quote-card{
+      background:var(--ink);
+      color:var(--white);
+      border-radius:34px;
+      padding:34px;
+      box-shadow:var(--shadow);
+    }
+
     .quote-card h2{color:var(--green)}
     .quote-card p{color:rgba(255,255,255,.76);font-size:1.1rem}
-    .dashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-    .dash-card{background:var(--white);border-radius:24px;padding:22px;box-shadow:var(--shadow)}
-    .dash-card span{display:block;color:var(--muted);font-weight:850;margin-bottom:8px}
-    .dash-card strong{display:block;font-size:2rem;line-height:1}
-    .pricing{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-    .price-card{background:var(--white);border-radius:32px;padding:30px;box-shadow:var(--shadow)}
-    .price-card.featured{background:var(--ink);color:var(--white)}
-    .price{font-size:3rem;font-weight:950;letter-spacing:-.06em;margin-bottom:6px}
+
+    .dashboard{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+    }
+
+    .dash-card{
+      background:var(--white);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .dash-card span{
+      display:block;
+      color:var(--muted);
+      font-weight:850;
+      margin-bottom:8px;
+    }
+
+    .dash-card strong{
+      display:block;
+      font-size:2rem;
+      line-height:1;
+    }
+
+    .pricing{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+
+    .price-card{
+      background:var(--white);
+      border-radius:32px;
+      padding:30px;
+      box-shadow:var(--shadow);
+    }
+
+    .price-card.featured{
+      background:var(--ink);
+      color:var(--white);
+    }
+
+    .price{
+      font-size:3rem;
+      font-weight:950;
+      letter-spacing:-.06em;
+      margin-bottom:6px;
+    }
+
     .price-card.featured .price{color:var(--green)}
-    .price-card ul{padding:0;margin:22px 0 0;list-style:none;display:grid;gap:12px}
+
+    .price-card ul{
+      padding:0;
+      margin:22px 0 0;
+      list-style:none;
+      display:grid;
+      gap:12px;
+    }
+
     .price-card li{color:var(--muted);font-weight:760}
     .price-card.featured li{color:rgba(255,255,255,.76)}
-    .waitlist-box{background:radial-gradient(circle at 90% 15%,rgba(215,255,0,.7),transparent 22%),var(--blue);border-radius:38px;padding:36px;box-shadow:var(--shadow)}
-    .beehiiv-form-wrap{margin-top:24px;max-width:720px}
-    footer{background:var(--cream);color:var(--muted);padding:26px 0 40px;font-weight:760}
 
-    @media(max-width:960px){.hero-grid,.grid-3,.split,.pricing{grid-template-columns:1fr}.dashboard{grid-template-columns:repeat(2,1fr)}.nav{display:none}.mockup-wrap{min-height:auto;padding-top:26px}}
-    @media(max-width:620px){.container{width:min(1160px,calc(100% - 22px))}h1{font-size:3.25rem}.actions{flex-direction:column}.btn{width:100%}.proof-row{display:grid}.phone{width:270px;height:542px}.dashboard{grid-template-columns:1fr}}
+    .waitlist-box{
+      background:
+        radial-gradient(circle at 90% 15%,rgba(215,255,0,.7),transparent 22%),
+        var(--blue);
+      border-radius:38px;
+      padding:36px;
+      box-shadow:var(--shadow);
+    }
+
+    .beehiiv-form-wrap{
+      margin-top:24px;
+      max-width:720px;
+      min-height:360px;
+    }
+
+    .beehiiv-form-wrap iframe{
+      width:100%;
+      height:360px;
+      border:0;
+      border-radius:24px;
+      background:white;
+      display:block;
+    }
+
+    footer{
+      background:var(--cream);
+      color:var(--muted);
+      padding:26px 0 40px;
+      font-weight:760;
+    }
+
+    @media(max-width:960px){
+      .hero-grid,
+      .ai-hero-grid,
+      .grid-3,
+      .split,
+      .pricing{grid-template-columns:1fr}
+      .dashboard{grid-template-columns:repeat(2,1fr)}
+      .nav{display:none}
+      .mockup-wrap{min-height:auto;padding-top:26px}
+    }
+
+    @media(max-width:620px){
+      .container{width:min(1160px,calc(100% - 22px))}
+      h1{font-size:3.25rem}
+      .actions{flex-direction:column}
+      .btn{width:100%}
+      .proof-row{display:grid}
+      .phone{width:270px;height:542px}
+      .dashboard{grid-template-columns:1fr}
+      .ai-panel{padding:10px;border-radius:26px}
+      .beehiiv-form-wrap iframe{height:420px}
+    }
   </style>
 </head>
+
 <body>
   <main>
     <section class="hero">
@@ -132,37 +639,337 @@
             <div class="brand-badge">D</div>
             <div class="brand-name">DayRate</div>
           </div>
-          <nav class="nav"><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#waitlist">Join waitlist</a></nav>
+
+          <nav class="nav">
+            <a href="#how">How it works</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#waitlist">Join waitlist</a>
+          </nav>
         </div>
+
         <div class="hero-grid">
           <div>
             <div class="eyebrow">Early pay for freelance creatives</div>
             <h1>Get paid before your client <span class="highlight">pays.</span></h1>
-            <p class="subcopy">DayRate connects to your email, tracks freelance invoices automatically, and may offer early access to part of your earnings based on client payment history.</p>
-            <div class="actions"><a href="#waitlist" class="btn btn-primary">Join Early Access</a><a href="#how" class="btn btn-secondary">See how it works</a></div>
-            <div class="proof-row"><span>Invoice £1,000</span><span>Get £700 today</span><span>Fee from £35</span></div>
+            <p class="subcopy">
+              DayRate connects to your email, tracks freelance invoices automatically,
+              and may offer early access to part of your earnings based on client payment history.
+            </p>
+
+            <div class="actions">
+              <a href="#waitlist" class="btn btn-primary">Join Early Access</a>
+              <a href="#how" class="btn btn-secondary">See how it works</a>
+            </div>
+
+            <div class="proof-row">
+              <span>Invoice £1,000</span>
+              <span>Get £700 today</span>
+              <span>Fee from £35</span>
+            </div>
           </div>
+
           <div class="mockup-wrap">
             <div class="blob"></div>
-            <div class="phone"><div class="screen"><div class="app-top"><span>DayRate</span><span>9:41</span></div><div class="advance-card"><div class="advance-label">Eligible for Early Pay</div><div class="advance-main">£700 today</div><small>Invoice value £1,000 · Estimated fee £35</small><button class="phone-btn">Check eligibility</button></div><div class="mini-grid"><div class="mini-card"><span>Outstanding</span>£4,250</div><div class="mini-card"><span>Expected</span>£1,500</div></div><div class="invoice-card"><strong>Nike shoot</strong><span>£1,000 · trusted client · due in 21 days</span></div><div class="invoice-card"><strong>Brand edit day</strong><span>£750 · invoice sent · due Friday</span></div><div class="invoice-card"><strong>Portrait session</strong><span>£350 · paid yesterday</span></div></div></div>
+            <div class="phone">
+              <div class="screen">
+                <div class="app-top">
+                  <span>DayRate</span>
+                  <span>9:41</span>
+                </div>
+
+                <div class="advance-card">
+                  <div class="advance-label">Eligible for Early Pay</div>
+                  <div class="advance-main">£700 today</div>
+                  <small>Invoice value £1,000 · Estimated fee £35</small>
+                  <button class="phone-btn">Check eligibility</button>
+                </div>
+
+                <div class="mini-grid">
+                  <div class="mini-card"><span>Outstanding</span>£4,250</div>
+                  <div class="mini-card"><span>Expected</span>£1,500</div>
+                </div>
+
+                <div class="invoice-card">
+                  <strong>Nike shoot</strong>
+                  <span>£1,000 · trusted client · due in 21 days</span>
+                </div>
+
+                <div class="invoice-card">
+                  <strong>Brand edit day</strong>
+                  <span>£750 · invoice sent · due Friday</span>
+                </div>
+
+                <div class="invoice-card">
+                  <strong>Portrait session</strong>
+                  <span>£350 · paid yesterday</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="how"><div class="container"><div class="section-head"><div class="eyebrow">How it works</div><h2>Cashflow without awkward client chasing.</h2><p>DayRate sits quietly in the background. It helps you understand where your money is and gives you the option to access cash early when an invoice is eligible.</p></div><div class="grid-3"><div class="card"><div class="num">1</div><h3>Connect your email</h3><p>Use Gmail, Outlook, Microsoft 365, or forward emails to DayRate. We look for invoices, POs, terms and payment confirmations.</p></div><div class="card"><div class="num">2</div><h3>Track every payment</h3><p>See what is outstanding, expected, overdue and paid without digging through your inbox or spreadsheet.</p></div><div class="card"><div class="num">3</div><h3>Access money early</h3><p>If the invoice and client history qualify, DayRate can offer part of your earnings before the client pays.</p></div></div></div></section>
+    <section class="ai-hero" id="ai">
+      <div class="container">
+        <div class="brand-row">
+          <div class="brand-left">
+            <div class="brand-badge" style="background:linear-gradient(135deg,var(--mint),var(--mint2));color:var(--navy);">D</div>
+            <div class="brand-name">DayRate</div>
+          </div>
 
-    <section class="blue"><div class="container split"><div class="quote-card"><h2>The plumber test.</h2><p>You wouldn’t hire a plumber, let them fix your sink, then say: “Cool, we’ll pay you in 60 days.”</p><p>So why is that normal for freelance creatives?</p></div><div class="card"><div class="eyebrow">The idea</div><h2>Freelancers shouldn’t be the bank.</h2><p>DayRate is built for creatives who value client relationships but still need clarity, control and better cashflow.</p></div></div></section>
+          <nav class="nav">
+            <a href="#ai">AI assistant</a>
+            <a href="#manual">Manual tools</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#waitlist">Join waitlist</a>
+          </nav>
+        </div>
 
-    <section><div class="container"><div class="section-head"><div class="eyebrow">Your money dashboard</div><h2>Know where your money is.</h2><p>One place for expected payments, overdue invoices, paid work and client reliability.</p></div><div class="dashboard"><div class="dash-card"><span>Outstanding</span><strong>£4,250</strong></div><div class="dash-card"><span>Expected this week</span><strong>£1,500</strong></div><div class="dash-card"><span>Overdue</span><strong>£900</strong></div><div class="dash-card"><span>Avg payment time</span><strong>32 days</strong></div></div></div></section>
+        <div class="ai-hero-grid">
+          <div>
+            <div class="eyebrow">AI-powered cashflow for freelance creatives</div>
+            <h2>Run your freelance money by <span class="highlight">chat.</span></h2>
+            <p class="subcopy">
+              Add invoices, expenses, payments and client notes just by typing.
+              Prefer forms? DayRate still gives you simple manual tools when you need them.
+            </p>
 
-    <section class="blue"><div class="container"><div class="section-head"><div class="eyebrow">Coming soon</div><h2>DayRate Score.</h2><p>A client payment reliability score based on real payment behaviour. The stronger the history, the more likely invoices become eligible for Early Pay.</p></div><div class="grid-3"><div class="card"><div class="num">✓</div><h3>Client reliability</h3><p>See which clients usually pay on time and which ones keep freelancers waiting.</p></div><div class="card"><div class="num">%</div><h3>Advance potential</h3><p>Trusted invoices may unlock early access to a percentage of your payment.</p></div><div class="card"><div class="num">!</div><h3>Risk clarity</h3><p>Know what to expect before your cashflow gets stretched.</p></div></div></div></section>
+            <div class="actions">
+              <a href="#waitlist" class="btn btn-primary">Join Early Access</a>
+              <a href="#ai-features" class="btn btn-secondary">See the AI feature</a>
+            </div>
 
-    <section id="pricing"><div class="container"><div class="section-head"><div class="eyebrow">Pricing</div><h2>Simple to start.</h2><p>Track payments first. Use Early Pay only when you need it.</p></div><div class="pricing"><div class="price-card"><h3>Free</h3><div class="price">£0</div><p>For testing DayRate with a few active invoices.</p><ul><li>Track up to 5 invoices</li><li>Basic dashboard</li><li>Email forwarding</li></ul></div><div class="price-card featured"><h3>DayRate Pro</h3><div class="price">£9.99/mo</div><p>For freelancers who want full payment visibility.</p><ul><li>Unlimited invoices</li><li>Gmail, Outlook and Microsoft 365 integrations</li><li>Payment forecasts</li><li>Client insights</li><li>Priority access to Early Pay</li></ul></div></div></div></section>
+            <div class="proof-row">
+              <span>“Invoice Nike £350”</span>
+              <span>AI creates the record</span>
+              <span>You stay in control</span>
+            </div>
+          </div>
 
-    <section class="blue" id="waitlist"><div class="container"><div class="waitlist-box"><div class="section-head" style="margin-bottom:0;"><div class="eyebrow">Join early access</div><h2>Get closer to the money you’ve already earned.</h2><p>Join the waitlist for automatic payment tracking, client payment insights and Early Pay eligibility.</p></div><div class="beehiiv-form-wrap"><script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="9e3c77d0-dcd4-405f-9d93-363eebdf003f"></script></div></div></div></section>
+          <div class="ai-panel">
+            <div class="ai-window">
+              <div class="ai-top">
+                <span>DayRate AI</span>
+                <span class="ai-pill">Invoice assistant</span>
+              </div>
 
-    <footer><div class="container"><strong>DayRate</strong> — get paid before your client pays.</div></footer>
+              <div class="chat">
+                <div class="bubble user">Add invoice for Nike, £350, shoot today.</div>
+
+                <div class="bubble ai">
+                  ✓ Invoice drafted.
+                  <div class="invoice-preview">
+                    <div><span>Client</span><strong>Nike</strong></div>
+                    <div><span>Amount</span><strong>£350</strong></div>
+                    <div><span>Work</span><strong>Shoot today</strong></div>
+                    <div><span>Due</span><strong>30 days</strong></div>
+                  </div>
+                </div>
+
+                <div class="bubble user">Mark Framer as paid.</div>
+                <div class="bubble ai">✓ Payment logged. Your outstanding balance is now £3,900.</div>
+              </div>
+
+              <div class="ai-input">
+                <span>Try: “Add expense £42 fuel for Nike”</span>
+                <span class="send-dot">↗</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">How it works</div>
+          <h2>Cashflow without awkward client chasing.</h2>
+          <p>
+            DayRate sits quietly in the background. It helps you understand where your money is
+            and gives you the option to access cash early when an invoice is eligible.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="num">1</div>
+            <h3>Connect your email</h3>
+            <p>Use Gmail, Outlook, Microsoft 365, or forward emails to DayRate. We look for invoices, POs, terms and payment confirmations.</p>
+          </div>
+
+          <div class="card">
+            <div class="num">2</div>
+            <h3>Track every payment</h3>
+            <p>See what is outstanding, expected, overdue and paid without digging through your inbox or spreadsheet.</p>
+          </div>
+
+          <div class="card">
+            <div class="num">3</div>
+            <h3>Access money early</h3>
+            <p>If the invoice and client history qualify, DayRate can offer part of your earnings before the client pays.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mint" id="ai-features">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">AI assistant</div>
+          <h2>Your freelance admin, handled by AI.</h2>
+          <p>
+            DayRate is built around a simple command bar. Type what happened,
+            and DayRate turns it into structured invoices, expenses, payments and reminders.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="num">✦</div>
+            <h3>Add invoices by typing</h3>
+            <p>“Invoice Nike £350 for today’s shoot” becomes an invoice draft with client, amount, date and payment terms.</p>
+          </div>
+
+          <div class="card">
+            <div class="num">£</div>
+            <h3>Log expenses fast</h3>
+            <p>“Add £18 parking to Adidas job” becomes a tagged expense attached to the right project.</p>
+          </div>
+
+          <div class="card">
+            <div class="num">✓</div>
+            <h3>Track payments naturally</h3>
+            <p>“Framer paid me today” updates your dashboard and clears the invoice from outstanding payments.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blue">
+      <div class="container split">
+        <div class="quote-card">
+          <h2>The plumber test.</h2>
+          <p>You wouldn’t hire a plumber, let them fix your sink, then say: “Cool, we’ll pay you in 60 days.”</p>
+          <p>So why is that normal for freelance creatives?</p>
+        </div>
+
+        <div class="card">
+          <div class="eyebrow">The idea</div>
+          <h2>Freelancers shouldn’t be the bank.</h2>
+          <p>DayRate is built for creatives who value client relationships but still need clarity, control and better cashflow.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Your money dashboard</div>
+          <h2>Know where your money is.</h2>
+          <p>One place for expected payments, overdue invoices, paid work and client reliability.</p>
+        </div>
+
+        <div class="dashboard">
+          <div class="dash-card"><span>Outstanding</span><strong>£4,250</strong></div>
+          <div class="dash-card"><span>Expected this week</span><strong>£1,500</strong></div>
+          <div class="dash-card"><span>Overdue</span><strong>£900</strong></div>
+          <div class="dash-card"><span>Avg payment time</span><strong>32 days</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blue">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Coming soon</div>
+          <h2>DayRate Score.</h2>
+          <p>
+            A client payment reliability score based on real payment behaviour.
+            The stronger the history, the more likely invoices become eligible for Early Pay.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="num">✓</div>
+            <h3>Client reliability</h3>
+            <p>See which clients usually pay on time and which ones keep freelancers waiting.</p>
+          </div>
+
+          <div class="card">
+            <div class="num">%</div>
+            <h3>Advance potential</h3>
+            <p>Trusted invoices may unlock early access to a percentage of your payment.</p>
+          </div>
+
+          <div class="card">
+            <div class="num">!</div>
+            <h3>Risk clarity</h3>
+            <p>Know what to expect before your cashflow gets stretched.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Pricing</div>
+          <h2>Simple to start.</h2>
+          <p>Track payments first. Use Early Pay only when you need it.</p>
+        </div>
+
+        <div class="pricing">
+          <div class="price-card">
+            <h3>Free</h3>
+            <div class="price">£0</div>
+            <p>For testing DayRate with a few active invoices.</p>
+            <ul>
+              <li>Track up to 5 invoices</li>
+              <li>Basic dashboard</li>
+              <li>Email forwarding</li>
+            </ul>
+          </div>
+
+          <div class="price-card featured">
+            <h3>DayRate Pro</h3>
+            <div class="price">£9.99/mo</div>
+            <p>For freelancers who want full payment visibility.</p>
+            <ul>
+              <li>Unlimited invoices</li>
+              <li>Gmail, Outlook and Microsoft 365 integrations</li>
+              <li>Payment forecasts</li>
+              <li>Client insights</li>
+              <li>Priority access to Early Pay</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blue" id="waitlist">
+      <div class="container">
+        <div class="waitlist-box">
+          <div class="section-head" style="margin-bottom:0;">
+            <div class="eyebrow">Join early access</div>
+            <h2>Get closer to the money you’ve already earned.</h2>
+            <p>Join the waitlist for automatic payment tracking, client payment insights, AI tools and Early Pay eligibility.</p>
+          </div>
+
+          <div class="beehiiv-form-wrap">
+            <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="9e3c77d0-dcd4-405f-9d93-363eebdf003f"></script>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <strong>DayRate</strong> — get paid before your client pays.
+      </div>
+    </footer>
   </main>
 </body>
 </html>
